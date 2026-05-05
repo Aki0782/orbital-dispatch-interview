@@ -157,7 +157,7 @@ export default function App() {
 
             <div className="grid gap-6">
               <CrewPanel activeCrewId={activeCrewId} crew={crew} onClearCrew={clearActiveCrew} onSelectCrew={setActiveCrewId} />
-              <StationIncidents />
+              <StationIncidents crew={crew} modules={modules} />
               <SupplyQueue
                 isPriorityMode={isPriorityMode}
                 modules={modules}
