@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { AlertTriangle, Gauge, Orbit, Satellite } from 'lucide-react';
 import { CrewPanel } from './components/CrewPanel';
 import { ModuleCard } from './components/ModuleCard';
+import { StationIncidents } from './components/StationIncidents';
 import { SupplyQueue } from './components/SupplyQueue';
 import { useOperations } from './context/OperationsContext';
 import { getOverview, updateModuleStatus } from './lib/api';
@@ -156,6 +157,7 @@ export default function App() {
 
             <div className="grid gap-6">
               <CrewPanel activeCrewId={activeCrewId} crew={crew} onClearCrew={clearActiveCrew} onSelectCrew={setActiveCrewId} />
+              <StationIncidents />
               <SupplyQueue
                 isPriorityMode={isPriorityMode}
                 modules={modules}

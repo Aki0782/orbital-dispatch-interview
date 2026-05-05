@@ -1,5 +1,13 @@
 import axios, { type AxiosRequestConfig } from 'axios';
-import type { CrewMember, ModuleStatus, StationModule, StationOverview, SupplyCrate } from '../types/station';
+import type {
+  CreateIncidentPayload,
+  CrewMember,
+  Incident,
+  ModuleStatus,
+  StationModule,
+  StationOverview,
+  SupplyCrate
+} from '../types/station';
 
 const API_ROOT = '/api';
 
@@ -48,4 +56,21 @@ export function updateModuleStatus(moduleId: number, status: ModuleStatus) {
 
 export function getPrioritySupplies() {
   return request<SupplyCrate[]>('/supplies/priority');
+}
+
+export function getIncidents() {
+  return request<Incident[]>('/incidents');
+}
+
+export function createIncident(payload: CreateIncidentPayload) {
+  return request<Incident>('/incidents', {
+    method: 'POST',
+    data: payload
+  });
+}
+
+export function resolveIncident(incidentId: number) {
+  return request<Incident>(`/incidents/${incidentId}/resolve`, {
+    method: 'PATCH'
+  });
 }

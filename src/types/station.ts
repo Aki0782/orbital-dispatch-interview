@@ -29,6 +29,27 @@ export type SupplyCrate = {
   destinationModuleId: number;
 };
 
+export type IncidentSeverity = 'low' | 'medium' | 'high';
+
+export type IncidentStatus = 'open' | 'resolved';
+
+export type Incident = {
+  id: number;
+  title: string;
+  severity: IncidentSeverity;
+  status: IncidentStatus;
+  moduleId: number;
+  assignedCrewId: number;
+  createdAt: string;
+};
+
+export type CreateIncidentPayload = {
+  title: string;
+  severity: IncidentSeverity;
+  moduleId: number;
+  assignedCrewId: number;
+};
+
 export type StationOverview = {
   modules: StationModule[];
   crew: CrewMember[];

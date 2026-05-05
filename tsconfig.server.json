@@ -11,5 +11,6 @@
     "outDir": "dist-server",
     "types": ["node"]
   },
-  "include": ["server/**/*.ts"]
+  "include": ["server/**/*.ts", "src/types/**/*.ts"],
+  "exclude": ["server/**/*.test.ts"]
 }
