@@ -1,4 +1,4 @@
-import type { CrewMember, StationModule, SupplyCrate } from '../../src/types/station.js';
+import type { CrewMember, Incident, StationModule, SupplyCrate } from '../../src/types/station.js';
 
 export const modules: StationModule[] = [
   {
@@ -118,5 +118,26 @@ export const supplies: SupplyCrate[] = [
     priority: 'low',
     etaMinutes: 44,
     destinationModuleId: 4
+  }
+];
+
+export const incidents: Incident[] = [
+  {
+    id: 301,
+    title: 'Docking collar pressure alert',
+    severity: 'high',
+    status: 'open',
+    moduleId: 3,
+    assignedCrewId: 104,
+    createdAt: '2026-05-05T12:00:00.000Z'
+  },
+  {
+    id: 302,
+    title: 'Hydroponics misting drift',
+    severity: 'medium',
+    status: 'resolved',
+    moduleId: 2,
+    assignedCrewId: 102,
+    createdAt: '2026-05-05T12:05:00.000Z'
   }
 ];

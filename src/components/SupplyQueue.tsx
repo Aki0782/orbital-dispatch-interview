@@ -9,13 +9,6 @@ type SupplyQueueProps = {
 };
 
 export function SupplyQueue({ supplies, modules, isPriorityMode, onTogglePriorityMode }: SupplyQueueProps) {
-  const visibleSupplies = isPriorityMode
-    ? [...supplies].sort((left, right) => {
-        const priorityRank = { high: 0, medium: 1, low: 2 };
-        return priorityRank[left.priority] - priorityRank[right.priority];
-      })
-    : supplies;
-
   return (
     <section className="rounded-lg border border-white/10 bg-white/[0.06] p-5 backdrop-blur">
       <div className="flex items-center justify-between gap-4">
@@ -35,7 +28,7 @@ export function SupplyQueue({ supplies, modules, isPriorityMode, onTogglePriorit
       </div>
 
       <div className="mt-4 grid gap-3">
-        {visibleSupplies.map((crate) => {
+        {supplies.map((crate) => {
           const destination = modules.find((stationModule) => stationModule.id === crate.destinationModuleId);
 
           return (

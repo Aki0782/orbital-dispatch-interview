@@ -1,9 +1,12 @@
 import { Router } from 'express';
-import type { DashboardFilter, ModuleStatus } from '../../src/types/station.js';
-import { crew, modules, supplies } from '../data/stationData.js';
+import type { CreateIncidentPayload, DashboardFilter, IncidentSeverity, ModuleStatus } from '../../src/types/station.js';
+import { crew, incidents, modules, supplies } from '../data/stationData.js';
 
 const router = Router();
 const statuses: ModuleStatus[] = ['stable', 'warning', 'critical'];
+const severities: IncidentSeverity[] = ['low', 'medium', 'high'];
+const priorityRank = { high: 0, medium: 1, low: 2 } as const;
+let nextIncidentId = Math.max(...incidents.map((incident) => incident.id), 300) + 1;
 
 router.get('/overview', (_request, response) => {
   response.json({
@@ -57,14 +60,39 @@ router.patch('/modules/:id/status', (request, response) => {
     return;
   }
 
-  stationModule.status = 'critical';
+  stationModule.status = nextStatus === 'stable' ? 'critical' : (nextStatus as ModuleStatus);
   response.json(stationModule);
 });
 
 router.get('/supplies/priority', (_request, response) => {
-  const priorityQueue = [...supplies].sort((left, right) => left.etaMinutes - right.etaMinutes);
+  const priorityQueue = [...supplies].sort((left, right) => {
+    const priorityDiff = priorityRank[right.priority] - priorityRank[left.priority];
+
+    if (priorityDiff !== 0) {
+      return priorityDiff;
+    }
+
+    return left.etaMinutes - right.etaMinutes;
+  });
 
   response.json(priorityQueue);
+});
+
+router.get('/incidents', (_request, response) => {
+  response.json(incidents);
+});
+
+router.patch('/incidents/:id/resolve', (request, response) => {
+  const incidentId = request.params.id as unknown as number;
+  const incident = incidents.find((incidentItem) => incidentItem.id === incidentId);
+
+  if (!incident) {
+    response.status(404).json({ message: 'Incident not found' });
+    return;
+  }
+
+  incident.status = 'resolved';
+  response.json(incident);
 });
 
 export default router;

@@ -2,6 +2,7 @@ import axios, { type AxiosRequestConfig } from 'axios';
 import type {
   CreateIncidentPayload,
   CrewMember,
+  DashboardFilter,
   Incident,
   ModuleStatus,
   StationModule,
@@ -41,6 +42,12 @@ async function request<T>(path: string, options?: AxiosRequestConfig): Promise<T
 
 export function getOverview() {
   return request<StationOverview>('/overview');
+}
+
+export function getModules(status: DashboardFilter = 'all') {
+  return request<StationModule[]>('/modules', {
+    params: status === 'all' ? undefined : { status }
+  });
 }
 
 export function getCrewMember(crewId: number) {

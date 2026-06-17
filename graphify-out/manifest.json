@@ -1,0 +1,152 @@
+{
+  "package.json": {
+    "mtime": 1777992354.849665,
+    "ast_hash": "efc8ecd496b6f696d1bd418ca19da958",
+    "semantic_hash": ""
+  },
+  "server/app.ts": {
+    "mtime": 1777992382.3200889,
+    "ast_hash": "f6eb587386660c3953401b591e6cb68e",
+    "semantic_hash": ""
+  },
+  "server/data/stationData.ts": {
+    "mtime": 1781630822.7412086,
+    "ast_hash": "a67f7e74108b624825b16424ec015c82",
+    "semantic_hash": ""
+  },
+  "server/index.ts": {
+    "mtime": 1777992382.3203359,
+    "ast_hash": "cf90747218846c3f924980139a109225",
+    "semantic_hash": ""
+  },
+  "server/routes/stationRoutes.ts": {
+    "mtime": 1781709091.6224957,
+    "ast_hash": "1c47806a0eda8e5d05f107a363713667",
+    "semantic_hash": ""
+  },
+  "src/App.test.tsx": {
+    "mtime": 1781708293.5652523,
+    "ast_hash": "27094394ce8edae48db8749bf674d7ce",
+    "semantic_hash": ""
+  },
+  "src/App.tsx": {
+    "mtime": 1781707524.7050672,
+    "ast_hash": "928dec468fc3c16549b46b5c398228a2",
+    "semantic_hash": ""
+  },
+  "src/components/CrewPanel.tsx": {
+    "mtime": 1779819868.4145646,
+    "ast_hash": "1e5fa6095db213dfa756453e548c3ce0",
+    "semantic_hash": ""
+  },
+  "src/components/MetricBar.tsx": {
+    "mtime": 1777986362.0263717,
+    "ast_hash": "e50dab864d38fbe063bdd7061815d265",
+    "semantic_hash": ""
+  },
+  "src/components/ModuleCard.tsx": {
+    "mtime": 1777986362.0264864,
+    "ast_hash": "1692d5b932c98ed5db955d421ffa94b7",
+    "semantic_hash": ""
+  },
+  "src/components/StationIncidents.tsx": {
+    "mtime": 1781708869.498993,
+    "ast_hash": "5f11d960b8a21ee7bd863d5846adbd4d",
+    "semantic_hash": ""
+  },
+  "src/components/StatusPill.tsx": {
+    "mtime": 1777986362.0261822,
+    "ast_hash": "56020339f65cc5708ac1d28e3b0e4cbb",
+    "semantic_hash": ""
+  },
+  "src/components/SupplyQueue.tsx": {
+    "mtime": 1781707378.5214636,
+    "ast_hash": "049e5d7cbbc36a4666825d43fea88d20",
+    "semantic_hash": ""
+  },
+  "src/context/OperationsContext.tsx": {
+    "mtime": 1781707378.5210483,
+    "ast_hash": "b391c36c9d4611b34341953804418769",
+    "semantic_hash": ""
+  },
+  "src/lib/api.ts": {
+    "mtime": 1781630822.7381067,
+    "ast_hash": "315bbd24b3acfd89e697156ee87d7329",
+    "semantic_hash": ""
+  },
+  "src/main.tsx": {
+    "mtime": 1777987143.4294605,
+    "ast_hash": "24a9e33d34b0f05c71233f430d65fd69",
+    "semantic_hash": ""
+  },
+  "src/test/setup.ts": {
+    "mtime": 1777992382.3210108,
+    "ast_hash": "b6047cb48430aab17d0c9a3cec1e4bb5",
+    "semantic_hash": ""
+  },
+  "src/types/station.ts": {
+    "mtime": 1777992382.3197463,
+    "ast_hash": "0e02e51bfe4282d5f39d164e203a792d",
+    "semantic_hash": ""
+  },
+  "src/vite-env.d.ts": {
+    "mtime": 1777986568.3238618,
+    "ast_hash": "0352474ba2918efe13895edbc3780d94",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1777992354.8504488,
+    "ast_hash": "8d2d0875b1d85f461e8f8dfcb54b2024",
+    "semantic_hash": ""
+  },
+  "tsconfig.server.json": {
+    "mtime": 1777992513.4518733,
+    "ast_hash": "97d3f11ae4637a9ae961c6f4c7438d44",
+    "semantic_hash": ""
+  },
+  "vite.config.ts": {
+    "mtime": 1777992507.5089583,
+    "ast_hash": "50bae4ea0bce12812e81092ad15d576f",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1781709214.9153535,
+    "ast_hash": "22a8b2cb2636adaaf7531840d1cd0f01",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1777986207.9653857,
+    "ast_hash": "e3d06c18bc3e7281096ce31a7537d3d6",
+    "semantic_hash": ""
+  },
+  "server/routes/stationRoutes.incidents.test.ts": {
+    "mtime": 1781708293.5679324,
+    "ast_hash": "25c526017a048c92245edadad9cdf96d",
+    "semantic_hash": ""
+  },
+  "server/routes/stationRoutes.modules.test.ts": {
+    "mtime": 1781708293.5675285,
+    "ast_hash": "2eb934d2d9b7d71f8f87a2b52b240e0d",
+    "semantic_hash": ""
+  },
+  "server/routes/stationRoutes.supplies.test.ts": {
+    "mtime": 1781708293.568296,
+    "ast_hash": "03abe3d8785d68d73ba1a6b8ed0326dd",
+    "semantic_hash": ""
+  },
+  "src/components/CrewPanel.test.tsx": {
+    "mtime": 1781708293.5659707,
+    "ast_hash": "cc766b3ffaf8712516ac0ebd04a3abcd",
+    "semantic_hash": ""
+  },
+  "src/components/StationIncidents.test.tsx": {
+    "mtime": 1781708869.499723,
+    "ast_hash": "dc917c343949da3c8c976757efc10b21",
+    "semantic_hash": ""
+  },
+  "src/components/SupplyQueue.test.tsx": {
+    "mtime": 1781708293.566653,
+    "ast_hash": "0baf71723c8251b8bb2182fb0c332ee8",
+    "semantic_hash": ""
+  }
+}

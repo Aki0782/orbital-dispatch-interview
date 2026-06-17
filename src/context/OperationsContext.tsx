@@ -14,7 +14,7 @@ type OperationsContextValue = {
 const OperationsContext = createContext<OperationsContextValue | null>(null);
 
 export function OperationsProvider({ children }: PropsWithChildren) {
-  const [activeCrewId, setActiveCrewId] = useState<number | null>(104);
+  const [activeCrewId, setActiveCrewId] = useState<number | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<DashboardFilter>('all');
   const [isPriorityMode, setIsPriorityMode] = useState(true);
 
@@ -25,7 +25,7 @@ export function OperationsProvider({ children }: PropsWithChildren) {
       isPriorityMode,
       setActiveCrewId,
       setSelectedStatus,
-      clearActiveCrew: () => setActiveCrewId(101),
+      clearActiveCrew: () => setActiveCrewId(null),
       togglePriorityMode: () => setIsPriorityMode((current) => !current)
     }),
     [activeCrewId, selectedStatus, isPriorityMode]

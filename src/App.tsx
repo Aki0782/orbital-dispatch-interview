@@ -5,8 +5,8 @@ import { ModuleCard } from './components/ModuleCard';
 import { StationIncidents } from './components/StationIncidents';
 import { SupplyQueue } from './components/SupplyQueue';
 import { useOperations } from './context/OperationsContext';
-import { getOverview, updateModuleStatus } from './lib/api';
-import type { DashboardFilter, ModuleStatus, StationOverview } from './types/station';
+import { getModules, getOverview, getPrioritySupplies, updateModuleStatus } from './lib/api';
+import type { CrewMember, DashboardFilter, ModuleStatus, StationModule, StationOverview, SupplyCrate } from './types/station';
 
 const filters: DashboardFilter[] = ['all', 'stable', 'warning', 'critical'];
 
@@ -14,9 +14,28 @@ export default function App() {
   const { activeCrewId, clearActiveCrew, isPriorityMode, selectedStatus, setActiveCrewId, setSelectedStatus, togglePriorityMode } =
     useOperations();
   const [overview, setOverview] = useState<StationOverview | null>(null);
+  const [visibleModules, setVisibleModules] = useState<StationModule[]>([]);
+  const [visibleSupplies, setVisibleSupplies] = useState<SupplyCrate[]>([]);
   const [overviewError, setOverviewError] = useState<string | null>(null);
   const [isOverviewLoading, setIsOverviewLoading] = useState(true);
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  const [hasAutoSelectedCrew, setHasAutoSelectedCrew] = useState(false);
+
+  const recommendActiveCrew = useMemo(
+    () => (currentOverview: StationOverview): CrewMember | null => {
+      const criticalModuleIds = new Set(
+        currentOverview.modules.filter((stationModule) => stationModule.status === 'critical').map((stationModule) => stationModule.id)
+      );
+      const prioritizedCrew = currentOverview.crew.filter((crewMember) => criticalModuleIds.has(crewMember.moduleId));
+
+      if (prioritizedCrew.length > 0) {
+        return [...prioritizedCrew].sort((left, right) => right.fatigue - left.fatigue)[0];
+      }
+
+      return currentOverview.crew[0] ?? null;
+    },
+    []
+  );
 
   useEffect(() => {
     let isMounted = true;
@@ -28,6 +47,8 @@ export default function App() {
 
         if (isMounted) {
           setOverview(nextOverview);
+          setVisibleModules(nextOverview.modules);
+          setVisibleSupplies(nextOverview.supplies);
           setOverviewError(null);
         }
       } catch (error) {
@@ -48,12 +69,79 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!overview) {
+      return;
+    }
+
+    if (selectedStatus === 'all') {
+      setVisibleModules(overview.modules);
+      return;
+    }
+
+    setVisibleModules(overview.modules.filter((stationModule) => stationModule.status !== selectedStatus));
+  }, [overview, selectedStatus]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadSupplies() {
+      if (!overview) {
+        return;
+      }
+
+      if (!isPriorityMode) {
+        setVisibleSupplies(overview.supplies);
+        return;
+      }
+
+      try {
+        const nextSupplies = await getPrioritySupplies();
+
+        if (isMounted) {
+          setVisibleSupplies(nextSupplies);
+          setOverviewError(null);
+        }
+      } catch (error) {
+        if (isMounted) {
+          setOverviewError(error instanceof Error ? error.message : 'Unable to load supply queue');
+        }
+      }
+    }
+
+    void loadSupplies();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [overview, isPriorityMode]);
+
+  useEffect(() => {
+    if (!overview || hasAutoSelectedCrew || activeCrewId !== null) {
+      return;
+    }
+
+    const recommendedCrew = recommendActiveCrew(overview);
+
+    if (recommendedCrew) {
+      setActiveCrewId(recommendedCrew.id);
+      setHasAutoSelectedCrew(true);
+    }
+  }, [activeCrewId, hasAutoSelectedCrew, overview, recommendActiveCrew, setActiveCrewId]);
+
   async function handleStatusChange(moduleId: number, status: ModuleStatus) {
     try {
       setIsUpdatingStatus(true);
       await updateModuleStatus(moduleId, status);
-      const nextOverview = await getOverview();
+      const [nextOverview, nextModules, nextSupplies] = await Promise.all([
+        getOverview(),
+        getModules(selectedStatus),
+        isPriorityMode ? getPrioritySupplies() : Promise.resolve<SupplyCrate[] | null>(null)
+      ]);
+
       setOverview(nextOverview);
+      setVisibleModules(nextModules);
+      setVisibleSupplies(nextSupplies ?? nextOverview.supplies);
       setOverviewError(null);
     } catch (error) {
       setOverviewError(error instanceof Error ? error.message : 'Unable to update module status');
@@ -64,15 +152,7 @@ export default function App() {
 
   const modules = overview?.modules ?? [];
   const crew = overview?.crew ?? [];
-  const supplies = overview?.supplies ?? [];
-
-  const filteredModules = useMemo(() => {
-    if (selectedStatus === 'all') {
-      return modules;
-    }
-
-    return modules.filter((stationModule) => stationModule.status !== selectedStatus);
-  }, [modules, selectedStatus]);
+  const supplies = visibleSupplies;
 
   const criticalCount = modules.filter((stationModule) => stationModule.status === 'critical').length;
   const averageOxygen = modules.length
@@ -144,7 +224,7 @@ export default function App() {
               </div>
 
               <div className="grid gap-4 xl:grid-cols-2">
-                {filteredModules.map((stationModule) => (
+                {visibleModules.map((stationModule) => (
                   <ModuleCard
                     isUpdating={isUpdatingStatus}
                     key={stationModule.id}
