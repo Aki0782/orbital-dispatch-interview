@@ -1,15 +1,16 @@
-# Graph Report - .  (2026-06-16)
+# Graph Report - Interview  (2026-06-17)
 
 ## Corpus Check
-- cluster-only mode — file stats not available
+- 29 files · ~6,337 words
+- Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 71 nodes · 139 edges · 9 communities
+- 185 nodes · 277 edges · 14 communities
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `bec8f038`
+- Built from commit: `ed0d1512`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,68 +20,96 @@
 - [[_COMMUNITY_Community 2|Community 2]]
 - [[_COMMUNITY_Community 3|Community 3]]
 - [[_COMMUNITY_Community 4|Community 4]]
+- [[_COMMUNITY_Community 5|Community 5]]
+- [[_COMMUNITY_Community 6|Community 6]]
 - [[_COMMUNITY_Community 7|Community 7]]
 - [[_COMMUNITY_Community 8|Community 8]]
+- [[_COMMUNITY_Community 9|Community 9]]
+- [[_COMMUNITY_Community 10|Community 10]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `request()` - 9 edges
-2. `StationModule` - 6 edges
-3. `CrewMember` - 6 edges
-4. `ModuleStatus` - 5 edges
-5. `DashboardFilter` - 5 edges
-6. `SupplyCrate` - 4 edges
-7. `Incident` - 4 edges
-8. `StationOverview` - 4 edges
-9. `OperationsProvider()` - 3 edges
-10. `useOperations()` - 3 edges
+1. `compilerOptions` - 17 edges
+2. `compilerOptions` - 11 edges
+3. `Orbital Dispatch Interview` - 11 edges
+4. `scripts` - 9 edges
+5. `request()` - 9 edges
+6. `StationModule` - 9 edges
+7. `CrewMember` - 9 edges
+8. `SupplyCrate` - 7 edges
+9. `ModuleStatus` - 6 edges
+10. `Incident` - 6 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `App()` --calls--> `useOperations()`  [EXTRACTED]
-  App.tsx → context/OperationsContext.tsx
+  src/App.tsx → src/context/OperationsContext.tsx
 
 ## Import Cycles
 - None detected.
 
-## Communities (9 total, 0 thin omitted)
+## Communities (14 total, 0 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.21
-Nodes (7): crew, incidents, modules, OperationsContextValue, OperationsProvider(), DashboardFilter, StationOverview
+Cohesion: 0.13
+Nodes (28): CrewPanel(), CrewPanelProps, crew, severityOptions, StationIncidents(), StationIncidentsProps, crew, incidents (+20 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.33
-Nodes (7): App(), filters, SupplyQueue(), SupplyQueueProps, useOperations(), StationModule, SupplyCrate
+Cohesion: 0.10
+Nodes (20): dependencies, axios, cors, express, lucide-react, react, react-dom, name (+12 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.33
-Nodes (10): api, createIncident(), getCrewMember(), getIncidents(), getModules(), getOverview(), getPrioritySupplies(), request() (+2 more)
+Cohesion: 0.10
+Nodes (20): devDependencies, concurrently, jsdom, supertest, tailwindcss, @tailwindcss/vite, @testing-library/jest-dom, @testing-library/react (+12 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.31
-Nodes (6): MetricBar(), toneStyles, ModuleCardProps, StatusPill(), statusStyles, ModuleStatus
+Cohesion: 0.11
+Nodes (18): compilerOptions, allowJs, allowSyntheticDefaultImports, esModuleInterop, forceConsistentCasingInFileNames, isolatedModules, jsx, lib (+10 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.25
-Nodes (8): CrewPanel(), CrewPanelProps, severityOptions, CreateIncidentPayload, CrewMember, Incident, IncidentSeverity, IncidentStatus
+Cohesion: 0.12
+Nodes (16): API Notes, Backend Requirements, Candidate Task, Data Rules, Demo Checklist, Issue Brief, Orbital Dispatch Interview, Required Work (+8 more)
+
+### Community 5 - "Community 5"
+Cohesion: 0.15
+Nodes (10): OperationsContext, OperationsContextValue, OperationsProvider(), useOperations(), App(), crew, incidents, modules (+2 more)
+
+### Community 6 - "Community 6"
+Cohesion: 0.14
+Nodes (13): compilerOptions, esModuleInterop, forceConsistentCasingInFileNames, lib, module, moduleResolution, outDir, skipLibCheck (+5 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.29
-Nodes (8): crew, incidents, modules, supplies, priorityRank, router, severities, statuses
+Cohesion: 0.24
+Nodes (8): MetricBar(), MetricBarProps, toneStyles, ModuleCard(), ModuleCardProps, StatusPill(), statusStyles, ModuleStatus
 
 ### Community 8 - "Community 8"
+Cohesion: 0.25
+Nodes (9): crew, incidents, modules, supplies, priorityRank, router, severities, statuses (+1 more)
+
+### Community 9 - "Community 9"
+Cohesion: 0.25
+Nodes (6): app, app, app, createApp(), app, port
+
+### Community 10 - "Community 10"
 Cohesion: 0.38
-Nodes (4): createApp(), app, port, app
+Nodes (5): SupplyQueue(), SupplyQueueProps, modules, supplies, SupplyCrate
 
 ## Knowledge Gaps
-- **20 isolated node(s):** `modules`, `crew`, `incidents`, `filters`, `CrewPanelProps` (+15 more)
+- **114 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+109 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `StationModule` connect `Community 1` to `Community 2`, `Community 3`, `Community 4`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Why does `ModuleStatus` connect `Community 3` to `Community 1`, `Community 2`, `Community 4`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **What connects `modules`, `crew`, `incidents` to the rest of the system?**
-  _20 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `devDependencies` connect `Community 2` to `Community 1`?**
+  _High betweenness centrality (0.034) - this node is a cross-community bridge._
+- **What connects `name`, `private`, `version` to the rest of the system?**
+  _114 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Community 0` be split into smaller, more focused modules?**
+  _Cohesion score 0.13015873015873017 - nodes in this community are weakly interconnected._
+- **Should `Community 1` be split into smaller, more focused modules?**
+  _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
+- **Should `Community 2` be split into smaller, more focused modules?**
+  _Cohesion score 0.1 - nodes in this community are weakly interconnected._
+- **Should `Community 3` be split into smaller, more focused modules?**
+  _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
+- **Should `Community 4` be split into smaller, more focused modules?**
+  _Cohesion score 0.11764705882352941 - nodes in this community are weakly interconnected._

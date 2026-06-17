@@ -5,7 +5,6 @@ import { crew, incidents, modules, supplies } from '../data/stationData.js';
 const router = Router();
 const statuses: ModuleStatus[] = ['stable', 'warning', 'critical'];
 const severities: IncidentSeverity[] = ['low', 'medium', 'high'];
-const priorityRank = { high: 0, medium: 1, low: 2 } as const;
 let nextIncidentId = Math.max(...incidents.map((incident) => incident.id), 300) + 1;
 
 router.get('/overview', (_request, response) => {
@@ -60,22 +59,12 @@ router.patch('/modules/:id/status', (request, response) => {
     return;
   }
 
-  stationModule.status = nextStatus === 'stable' ? 'critical' : (nextStatus as ModuleStatus);
+  stationModule.status = nextStatus as ModuleStatus;
   response.json(stationModule);
 });
 
 router.get('/supplies/priority', (_request, response) => {
-  const priorityQueue = [...supplies].sort((left, right) => {
-    const priorityDiff = priorityRank[right.priority] - priorityRank[left.priority];
-
-    if (priorityDiff !== 0) {
-      return priorityDiff;
-    }
-
-    return left.etaMinutes - right.etaMinutes;
-  });
-
-  response.json(priorityQueue);
+  response.json(supplies);
 });
 
 router.get('/incidents', (_request, response) => {
@@ -86,7 +75,7 @@ router.patch('/incidents/:id/resolve', (request, response) => {
   const incidentId = request.params.id as unknown as number;
   const incident = incidents.find((incidentItem) => incidentItem.id === incidentId);
 
-  if (!incident) {
+  if (incident) {
     response.status(404).json({ message: 'Incident not found' });
     return;
   }
