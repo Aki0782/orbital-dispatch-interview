@@ -149,9 +149,3 @@ During the live demo, show:
 - The resolved incident is visually marked as resolved.
 - Tests pass after implementation.
 
-## Scoring
-
-- Existing bug fixes: 40%
-- Station Incidents backend: 25%
-- Station Incidents frontend logic: 25%
-- TypeScript/code quality: 10%
