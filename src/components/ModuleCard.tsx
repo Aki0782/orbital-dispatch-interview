@@ -47,7 +47,7 @@ export function ModuleCard({ stationModule, isUpdating, onStatusChange }: Module
         <button
           className="rounded-md bg-cyan-300 px-3 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200 disabled:cursor-not-allowed disabled:opacity-60"
           disabled={isUpdating}
-          onClick={() => onStatusChange(stationModule.id, 'stable')}
+          onClick={() => onStatusChange(stationModule.id, 'warning')}
           type="button"
         >
           Mark stable
